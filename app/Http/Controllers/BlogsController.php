@@ -10,6 +10,7 @@ use NamBlog\Http\Requests;
 use NamBlog\Http\Controllers\Controller;
 
 use NamBlog\Blogs;
+use NamBlog\Posts;
 
 class BlogsController extends Controller
 {
@@ -57,7 +58,8 @@ class BlogsController extends Controller
      */
     public function show($blog)
     {
-        return view('blogs.show', compact('blog'));
+	    
+        return view('blogs.show', compact('blog', 'posts'));
     }
     
     /**
