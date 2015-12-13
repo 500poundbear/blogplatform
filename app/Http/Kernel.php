@@ -29,5 +29,6 @@ class Kernel extends HttpKernel
         'auth' => \NamBlog\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \NamBlog\Http\Middleware\RedirectIfAuthenticated::class,
+        'csrf' => \NamBlog\Http\Middleware\VerifyCsrfToken::class
     ];
 }

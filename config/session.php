@@ -16,8 +16,8 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
-
+    #'driver' => env('SESSION_DRIVER', 'file'),
+	'driver' => 'file',
     /*
     |--------------------------------------------------------------------------
     | Session Lifetime
@@ -135,7 +135,7 @@ return [
     |
     */
 
-    'domain' => null,
+    'domain' => 'localhost:8888/',
 
     /*
     |--------------------------------------------------------------------------

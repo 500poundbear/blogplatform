@@ -33,10 +33,15 @@ class AuthController extends Controller
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
+
+	//redirection path
+	protected $redirectPath = '/blogs';
+	protected $loginPath = '/asdfasf';
+
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array  $data	 	
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)

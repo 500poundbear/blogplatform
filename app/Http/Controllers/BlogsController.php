@@ -1,7 +1,8 @@
 <?php
 
 namespace NamBlog\Http\Controllers;
-
+use Auth;
+use Session;
 use Illuminate\Http\Request;
 
 use NamBlog\Http\Requests;
@@ -19,6 +20,9 @@ class BlogsController extends Controller
     public function index()
     {
 	    $blogs = Blogs::all();
+	    var_dump(Auth::user());
+	    var_dump(Session::all());
+	        
 	    return view('blogs.index', compact('blogs'));
     }
 
@@ -29,7 +33,8 @@ class BlogsController extends Controller
      */
     public function create()
     {
-        //
+	    
+        return view('blogs.create');
     }
 
     /**

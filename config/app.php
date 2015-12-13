@@ -145,6 +145,7 @@ return [
         NamBlog\Providers\EventServiceProvider::class,
         NamBlog\Providers\RouteServiceProvider::class,
 
+		Collective\Html\HtmlServiceProvider::class
     ],
 
     /*
@@ -192,7 +193,10 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-
+		
+		##added
+		'Form' 		=> Collective\Html\FormFacade::class,
+		'Html'		=> Collective\Html\HtmlFacade::class
     ],
 
 ];

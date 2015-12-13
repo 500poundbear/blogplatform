@@ -1,7 +1,11 @@
 @extends('main')
  
 @section('content')
-    All of the blogs
+    <h3>Links</h3>
+    <ul>
+	    <li><a href="{{route('blogs.create')}}">Create</a></li>
+		
+    </ul>
     
     @if (!$blogs -> count()) 
     	You have no blog
