@@ -6,7 +6,7 @@
     </head>
     <body>
         @section('sidebar')
-            This is the master sidebar.
+            <a href="/blogs">Blogs</a>
         @show
 
         <div class="container">
