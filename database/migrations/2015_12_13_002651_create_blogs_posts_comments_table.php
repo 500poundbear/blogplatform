@@ -16,15 +16,18 @@ class CreateBlogsPostsCommentsTable extends Migration
 		    $table->increments('id');
 		    $table->string('title')->default('Empty blog title');
 		    $table->string('description')->default('');
-		    $table->string('slug') -> default('');
+		    $table->string('slug') ->unique();
 		    $table->string('type')->default('public');
-		    
+		    $table->integer('owner')->unsigned()->default(0);
+		    $table->foreign('owner')->references('id')->on('users')->onDelete('cascade');
 	    });
 	    
 	    Schema::create('posts', function (Blueprint $table){
 		    $table->increments('id');
             $table->string('title')->default('No title');
             $table->string('summary')->default('');
+            $table->string('content')->default('');
+            $table->string('slug')->default('');
             $table->integer('blog_id')->unsigned()->default(0);
             $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');	
             $table->integer('author_id')->unsigned()->default(0);
