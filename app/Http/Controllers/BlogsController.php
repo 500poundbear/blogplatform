@@ -3,6 +3,7 @@
 namespace NamBlog\Http\Controllers;
 use Auth;
 use Session;
+use Routes;
 use Illuminate\Http\Request;
 
 use NamBlog\Http\Requests;
@@ -54,9 +55,21 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Blog $blog)
+    public function show($blog)
     {
-        //
+        return view('blogs.show', compact('blog'));
+    }
+    
+    /**
+     * Manage the specific resource. More like dashboard
+     *
+     * @param  
+     * @return \Illuminate\Http\Response
+     */
+    public function manage($blog)
+    {
+	    
+	   	return view('blogs.manage', compact('blog'));
     }
 
     /**
@@ -90,6 +103,9 @@ class BlogsController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
+        $todelete = Blog::findOrFail($blog);
+        $todelete->delete();
+        
+        return Redirect::route('blogs.index');
     }
 }

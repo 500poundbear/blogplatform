@@ -10,7 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,8 +25,9 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::model('blogs', 'Blog');
 
-Route::bind('blogs', function($value, $route) {
-	return App\Blog::whereSlug($value)->first();
-});
 
+Route::bind('blogs', function($value, $route) {
+	return NamBlog\Blogs::whereSlug($value)->first();
+});
+Route::get('blogs/{blogs}/dashboard', ['as'=>'blogs.manage', 'uses'=>'BlogsController@manage']);
 Route::resource('blogs', 'BlogsController', ['middleware'=>'auth']);
