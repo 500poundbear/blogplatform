@@ -1,18 +1,16 @@
 <?php
 
 namespace NamBlog\Http\Controllers;
-use Auth;
-use Session;
-use Routes;
+
 use Illuminate\Http\Request;
 
 use NamBlog\Http\Requests;
 use NamBlog\Http\Controllers\Controller;
 
-use NamBlog\Blogs;
 use NamBlog\Posts;
+use NamBlog\Blogs;
 
-class BlogsController extends Controller
+class PostsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,11 +19,7 @@ class BlogsController extends Controller
      */
     public function index()
     {
-	    $blogs = Blogs::all();
-	    var_dump(Auth::user());
-	    var_dump(Session::all());
-	        
-	    return view('blogs.index', compact('blogs'));
+	    
     }
 
     /**
@@ -35,8 +29,7 @@ class BlogsController extends Controller
      */
     public function create()
     {
-	    
-        return view('blogs.create');
+        //
     }
 
     /**
@@ -45,9 +38,9 @@ class BlogsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Posts $post)
     {
-        //
+        
     }
 
     /**
@@ -56,23 +49,10 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Blogs $blog)
+    public function show(Blogs $blog, Posts $post)
     {
-	    $posts = $blog->posts()->get();
-	    #$posts = Blogs::findOrFail($blog)->posts();
-        return view('blogs.show', compact('blog', 'posts'));
-    }
-    
-    /**
-     * Manage the specific resource. More like dashboard
-     *
-     * @param  
-     * @return \Illuminate\Http\Response
-     */
-    public function manage(Blogs $blog)
-    {
-	    $posts = $blog->posts()->get();
-	   	return view('blogs.manage', compact('blog','posts'));
+	    
+        return view('posts.show', compact('blog','post'));
     }
 
     /**
@@ -81,7 +61,7 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Blog $blog)
+    public function edit($id)
     {
         //
     }
@@ -93,7 +73,7 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Blog $blog)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -104,11 +84,8 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Blog $blog)
+    public function destroy($id)
     {
-        $todelete = Blog::findOrFail($blog);
-        $todelete->delete();
-        
-        return Redirect::route('blogs.index');
+        //
     }
 }

@@ -10,4 +10,8 @@ class Posts extends Model
 	{
 		return $this->belongsTo('NamBlog\Blogs');
 	}
+	public function author()
+	{
+		return $this->belongsTo('NamBlog\User');
+	}
 }

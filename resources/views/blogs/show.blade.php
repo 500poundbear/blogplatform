@@ -3,5 +3,14 @@
 @section('content')
 	The blog, <b>{{$blog['title']}}</b> should be rendered here. 
     
-    {{$posts}}
+    
+    <h3>Posts</h3>
+	
+	@foreach ($posts as $post)
+		<h4>{{$post['title']}}</h4>
+		<p>{{$post['summary']}}</p>
+		<p>{{$post['content']}}</p>
+		<span>Created at {{$post['created_at']}}</span>
+	@endforeach
+
 @endsection
