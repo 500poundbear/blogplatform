@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use NamBlog\Http\Requests;
 use NamBlog\Http\Controllers\Controller;
 
+use NamBlog\Blogs;
+
 class BlogsController extends Controller
 {
     /**
@@ -16,7 +18,8 @@ class BlogsController extends Controller
      */
     public function index()
     {
-	    return view('blogs.index');
+	    $blogs = Blogs::all();
+	    return view('blogs.index', compact('blogs'));
     }
 
     /**
@@ -46,7 +49,7 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Blog $blog)
     {
         //
     }
@@ -57,7 +60,7 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Blog $blog)
     {
         //
     }
@@ -69,7 +72,7 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Blog $blog)
     {
         //
     }
@@ -80,7 +83,7 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Blog $blog)
     {
         //
     }

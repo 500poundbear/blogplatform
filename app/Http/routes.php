@@ -15,4 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::model('blogs', 'Blog');
+
+Route::bind('blogs', function($value, $route) {
+	return App\Blog::whereSlug($value)->first();
+});
+
 Route::resource('blogs', 'BlogsController');

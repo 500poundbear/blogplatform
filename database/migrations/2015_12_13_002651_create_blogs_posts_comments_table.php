@@ -16,6 +16,7 @@ class CreateBlogsPostsCommentsTable extends Migration
 		    $table->increments('id');
 		    $table->string('title')->default('Empty blog title');
 		    $table->string('description')->default('');
+		    $table->string('slug') -> default('');
 		    $table->string('type')->default('public');
 		    
 	    });
