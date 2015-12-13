@@ -11,5 +11,9 @@
 
 
 	<a href="">Update</a>
+	
+	<h3>Comments</h3>
+	
+	{{$comments}}
 
 @endsection

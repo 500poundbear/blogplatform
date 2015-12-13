@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call('users_table_seeder');
 		$this->call('blogs_table_seeder');
 		$this->call('posts_table_seeder');
+		$this->call('comments_table_seeder');
         Model::reguard();
     }
 }

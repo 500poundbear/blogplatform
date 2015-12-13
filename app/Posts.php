@@ -14,4 +14,8 @@ class Posts extends Model
 	{
 		return $this->belongsTo('NamBlog\User');
 	}
+	public function comment()
+	{
+		return $this->hasMany('NamBlog\Comment', 'post_id');
+	}
 }
