@@ -3,7 +3,10 @@
 namespace NamBlog\Http\Controllers;
 use Auth;
 use Session;
+use Input;
 use Routes;
+use Validator;
+use Redirect;
 use Illuminate\Http\Request;
 
 use NamBlog\Http\Requests;
@@ -19,13 +22,17 @@ class BlogsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     
+    private function getuserinfo() {
+	    
+	    return Auth::user();
+    }
     public function index()
     {
 	    $blogs = Blogs::all();
-	    Session::put('FUCK THIS SHIT', "FDSDF");
-		var_dump(Session::all());
-	        
-	    return view('blogs.index', compact('blogs'));
+	    //var_dump(Session::all());
+	    $user = $this->getuserinfo();
+	    return view('blogs.index', compact('blogs', 'user'));
     }
 
     /**
@@ -35,8 +42,9 @@ class BlogsController extends Controller
      */
     public function create()
     {
+	    $user = $this->getuserinfo();
 	    
-        return view('blogs.create');
+        return view('blogs.create', compact('user'));
     }
 
     /**
@@ -47,7 +55,40 @@ class BlogsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+	    //Use Input::get(<inputname>) to get value
+	    var_dump(Input::all());
+	    
+	    $rules = array(
+		    'title' => 'required',
+		    'description' => 'required|max:200',
+		    'slug' => 'required|max:100',
+		    'type' => 'required|in:public,private'
+	    );
+	    
+	    $validator = Validator::make(Input::all(), $rules);
+	    
+	    if ($validator->fails()){
+		    return Redirect::to('/blogs/create')
+		    		->withErrors($validator)
+		    		->withInput();
+		    
+	    } else {
+		    $newblogdata = array(
+			    'title' => Input::get('title'),
+			    'description' => Input::get('description'),
+			    'slug' => Input::get('slug'), 
+			    'type' => Input::get('type'),
+			    'owner' => Auth::user()['id']
+		    );
+			$newblogentry = Blogs::create($newblogdata);
+			$saved = $newblogentry->save();		
+			
+			if(!$saved) {
+				NamBlog::abort(500, 'Error');
+			} else {
+				return Redirect::to(route('blogs.index'));
+			}    
+	    }
     }
 
     /**
@@ -104,11 +145,11 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Blog $blog)
+    public function destroy(Blogs $blog)
     {
-        $todelete = Blog::findOrFail($blog);
+        $todelete = Blogs::findOrFail($blog['id']);
         $todelete->delete();
         
-        return Redirect::route('blogs.index');
+        return Redirect::to(route('blogs.index'));
     }
 }

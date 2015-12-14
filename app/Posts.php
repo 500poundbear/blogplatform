@@ -18,4 +18,6 @@ class Posts extends Model
 	{
 		return $this->hasMany('NamBlog\Comment', 'post_id');
 	}
+	
+	protected $fillable = array('title', 'summary','content', 'slug', 'blog_id', 'author_id');
 }

@@ -1,6 +1,9 @@
 @extends('main')
  
 @section('content')
+	    
+	Well hello there <b> {{$user['name']}} </b> (id: {{$user['id']}})
+
     <h3>Links</h3>
     <ul>
 	    <li><a href="{{route('blogs.create')}}">Create Blog</a></li>

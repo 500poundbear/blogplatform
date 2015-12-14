@@ -20,6 +20,7 @@ class CreateBlogsPostsCommentsTable extends Migration
 		    $table->string('type')->default('public');
 		    $table->integer('owner')->unsigned()->default(0);
 		    $table->foreign('owner')->references('id')->on('users')->onDelete('cascade');
+		    $table->timestamps();
 	    });
 	    
 	    Schema::create('posts', function (Blueprint $table){

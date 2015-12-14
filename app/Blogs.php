@@ -10,4 +10,6 @@ class Blogs extends Model
 	{
 		return $this->hasMany('NamBlog\Posts', 'blog_id');
 	}
+	
+	protected $fillable = array('title', 'description', 'slug', 'type', 'owner');
 }

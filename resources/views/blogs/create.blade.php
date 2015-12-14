@@ -3,12 +3,14 @@
 @section('content')
 	
 	
+	Well hello there <b> {{$user['name']}} </b> (id: {{$user['id']}})
+	
     <h3>Links</h3>
     <ul>
 	    <li><a href="{{route('blogs.create')}}">Create</a></li>	
     </ul>
     <div class="form-group">
-   	{!!Form::open(array('route'=>'blogs.create', 'method' => 'post')) !!} 
+   	{!!Form::open(array('route'=>'blogs.store', 'method' => 'post')) !!} 
    			{!! Form::label('name', 'Title') !!} 
 	   		{!! Form::text('title', Input::old('title'), array('class' => 'form-control')) !!}	   		
 	   		{!! Form::label('name', 'Description') !!} 
