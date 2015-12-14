@@ -14,6 +14,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('session', function () {
+	return Session::all();
+});
+
 //Authentication routes
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -34,7 +38,7 @@ Route::bind('blogs', function($value, $route) {
 	return NamBlog\Blogs::whereSlug($value)->first();
 });
 Route::get('blogs/{blogs}/dashboard', ['as'=>'blogs.manage', 'uses'=>'BlogsController@manage']);
-Route::resource('blogs', 'BlogsController', ['middleware'=>'auth']);
+Route::resource('blogs', 'BlogsController', ['middleware'=>'']);
 
 Route::resource('blogs.posts', 
 				'PostsController', 

@@ -22,8 +22,8 @@ class BlogsController extends Controller
     public function index()
     {
 	    $blogs = Blogs::all();
-	    var_dump(Auth::user());
-	    var_dump(Session::all());
+	    Session::put('FUCK THIS SHIT', "FDSDF");
+		var_dump(Session::all());
 	        
 	    return view('blogs.index', compact('blogs'));
     }

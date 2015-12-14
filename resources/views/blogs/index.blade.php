@@ -18,9 +18,8 @@
 					<form action="{{ route('blogs.destroy', $blog->slug)}}" method="POST">
 					    <input type="hidden" name="_method" value="DELETE">
 					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-					    <button>Delete User</button>
+					    <button>Delete Blog</button>
 					</form>
-									}}">Delete</a> 
 	    		</li>
 	    		
 	    	@endforeach
