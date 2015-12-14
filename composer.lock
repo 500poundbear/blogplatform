@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "297f39262cdba9523d971f10a56297d8",
-    "content-hash": "ad7660e0d344ea97306b12a57993acbf",
+    "hash": "ca3c1a8a155d17802fda1226dbab73d5",
+    "content-hash": "2be3075801ea3cc2cb602fd9926e56ee",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2075,6 +2075,47 @@
                 "test"
             ],
             "time": "2015-05-11 14:41:42"
+        },
+        {
+            "name": "laravel/homestead",
+            "version": "v2.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/homestead.git",
+                "reference": "301484041e062bb62b42d2bbbf0d636408d0f6b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/homestead/zipball/301484041e062bb62b42d2bbbf0d636408d0f6b4",
+                "reference": "301484041e062bb62b42d2bbbf0d636408d0f6b4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "symfony/console": "~2.0",
+                "symfony/process": "~2.0"
+            },
+            "bin": [
+                "homestead"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Homestead\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "A virtual machine for web artisans.",
+            "time": "2015-10-01 17:07:30"
         },
         {
             "name": "mockery/mockery",
