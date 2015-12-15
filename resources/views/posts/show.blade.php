@@ -1,6 +1,8 @@
 @extends('main')
  
 @section('content')
+	<a href="{{route('blogs.manage', [$blog->slug])}}">Back</a>
+	
 	<form action="{{ route('blogs.posts.destroy', [$blog->slug, $post->slug])}}" method="POST">
 					    <input type="hidden" name="_method" value="DELETE">
 					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -8,7 +10,6 @@
 					</form>
 
 	<h3>Post editor here</h3>
-	{{$post}}
 	
 	{!!Form::model($post, ['route' => ['blogs.posts.update', $blog->slug, $post->slug], 'method' => 'put']) !!} 
    			{!! Form::label('name', 'Title') !!} 
@@ -31,7 +32,11 @@
 
 	
 	<h3>Comments</h3>
-	
-	{{$comments}}
+	@foreach ($comments as $comment)
+	    		<li>{{$comment->name}}</li>
+	    		</form>
+		</li>		
+	@endforeach
+
 
 @endsection

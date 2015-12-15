@@ -90,7 +90,6 @@ class PostsController extends Controller
         return view('posts.show', compact('blog','post','comments'));
     }
 
-
     /**
      * Update the specified resource in storage.
      *

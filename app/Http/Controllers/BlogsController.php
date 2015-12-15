@@ -106,14 +106,17 @@ class BlogsController extends Controller
     
     /**
      * Manage the specific resource. More like dashboard
-     *
-     * @param  
-     * @return \Illuminate\Http\Response
      */
     public function manage(Blogs $blog)
     {
 	    $posts = $blog->posts()->get();
-	   	return view('blogs.manage', compact('blog','posts'));
+	    $comments = array();
+	    foreach($posts as $post) {
+		    foreach($post->comment()->get() as $comment) {
+			    $comments[] = $comment;
+		    }
+	    }
+	   	return view('blogs.manage', compact('blog','posts','comments'));
     }
 
     /**
