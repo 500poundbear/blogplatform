@@ -44,7 +44,7 @@ Route::resource('blogs.posts',
 				'PostsController', 
 				[
 					'middleware'=>'auth', 
-					'except'=>['edit']
+					'except'=>['edit', 'index']
 				
 				]);
 				

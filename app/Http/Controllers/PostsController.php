@@ -20,16 +20,6 @@ use NamBlog\Blogs;
 class PostsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-	    
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -52,23 +42,28 @@ class PostsController extends Controller
 	    $rules = array(
 		    'title' => 'required',
 		    'summary' => 'required|max:200',
-		    'content' => '', 
+		    'content' => 'required', 
 		    'slug' => 'required|max:100',
+		    'blogid' => 'required'
 	    );
 	    
 	    $validator = Validator::make(Input::all(), $rules);
 	    
 	    if ($validator->fails()){
-		    return Redirect::to(route('blogs.posts.create'))
+		    echo "SDSDFSDF";
+		    var_dump($validator->messages());
+		    var_dump($validator);
+		    /*return Redirect::to(route('blogs.posts.create'))
 		    		->withErrors($validator)
 		    		->withInput();
-		    
+		    */
 	    } else {
 		    $newpostdata = array(
 			    'title' => Input::get('title'),
 			    'summary' => Input::get('summary'),
 			    'content' => Input::get('content'),
 			    'slug' => Input::get('slug'),
+			    'blog_id' => Input::get('blogid'),
 			    'author_id' => Auth::user()['id']
 		    );
 			$newpostentry = Posts::create($newpostdata);
@@ -77,7 +72,8 @@ class PostsController extends Controller
 			if(!$saved) {
 				NamBlog::abort(500, 'Error');
 			} else {
-				return Redirect::to(route('blogs.posts.index'));
+				$currblog = Blogs::where('id', $newpostdata['blog_id'])->first();
+				return Redirect::to(route('blogs.show', $currblog['slug']));
 			}    
 	    }
     }
@@ -95,16 +91,6 @@ class PostsController extends Controller
         return view('posts.show', compact('blog','post','comments'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -124,8 +110,12 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Blogs $blog, Posts $post)
+    { 
+        $todelete = Posts::findOrFail($post['id']);
+        $todelete->delete();
+        
+        return Redirect::to(route('blogs.manage', $blog['slug']));
+
     }
 }

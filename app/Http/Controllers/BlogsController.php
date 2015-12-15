@@ -147,6 +147,7 @@ class BlogsController extends Controller
      */
     public function destroy(Blogs $blog)
     {
+	    
         $todelete = Blogs::findOrFail($blog['id']);
         $todelete->delete();
         

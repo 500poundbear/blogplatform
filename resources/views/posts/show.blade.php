@@ -3,8 +3,12 @@
 @section('content')
 
 	<h3>Post editor here</h3>
-
-	<a href="">Delete</a>
+	{{var_dump($post->id)}}
+	<form action="{{ route('blogs.posts.destroy', [$blog->slug, $post->slug])}}" method="POST">
+					    <input type="hidden" name="_method" value="DELETE">
+					    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+					    <button>Delete Post</button>
+					</form>
 
 	{{$post}}
 	{{$blog}}
