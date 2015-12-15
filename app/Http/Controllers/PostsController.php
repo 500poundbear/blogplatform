@@ -38,7 +38,6 @@ class PostsController extends Controller
      public function store(Request $request)
     {
 	    //Use Input::get(<inputname>) to get value
-	    var_dump(Input::all());
 	    $rules = array(
 		    'title' => 'required',
 		    'summary' => 'required|max:200',
@@ -99,10 +98,41 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Blogs $blog, Posts $post)
     {
-        //
-    }
+	    $rules = array(
+		    'title' => 'required',
+		    'summary' => 'required|max:200',
+		    'content' => 'required', 
+		    'slug' => 'required|max:100',
+		    'postid' => 'required'
+	    );
+	    
+	    $validator = Validator::make(Input::all(), $rules);
+	    
+	    if ($validator->fails()){
+		    echo "SDSDFSDF";
+		    var_dump($validator->messages());
+		    var_dump($validator);
+		    /*return Redirect::to(route('blogs.posts.create'))
+		    		->withErrors($validator)
+		    		->withInput();
+		    */
+	    } else {
+		    $updatedpostdata = array(
+			    'title' => Input::get('title'),
+			    'summary' => Input::get('summary'),
+			    'content' => Input::get('content'),
+			    'slug' => Input::get('slug'),
+			    'author_id' => Auth::user()['id']
+		    );
+		    
+		    /* TODO: Check if user is authorised to edit post */
+		    
+			$updatedpost = Posts::where('id', Input::get('postid'))->update($updatedpostdata);	
+			return Redirect::to(route('blogs.posts.show', [$blog['slug'], $updatedpostdata['slug']]));    		    
+	    }
+	}
 
     /**
      * Remove the specified resource from storage.
