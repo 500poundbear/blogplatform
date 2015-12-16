@@ -19,13 +19,14 @@ Route::get('session', function () {
 });
 
 //Authentication routes
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('auth/login', ['as'=>'auth.login', 'uses'=>'Auth\AuthController@getLogin']);
+Route::post('auth/login', ['as'=>'auth.login', 'uses'=>'Auth\AuthController@postLogin']);
+
+Route::post('auth/logout', ['as'=>'auth.logout','uses'=>'Auth\AuthController@getLogout']);
 
 //Registration routes
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::get('auth/register', ['as'=>'auth.register', 'uses'=>'Auth\AuthController@getRegister']);
+Route::post('auth/register', ['as'=>'auth.register', 'uses'=>'Auth\AuthController@postRegister']);
 
 Route::model('blogs', 'Blogs');
 Route::model('posts', 'Posts');
@@ -38,14 +39,12 @@ Route::bind('blogs', function($value, $route) {
 	return NamBlog\Blogs::whereSlug($value)->first();
 });
 Route::get('blogs/{blogs}/dashboard', ['as'=>'blogs.manage', 'uses'=>'BlogsController@manage']);
-Route::resource('blogs', 'BlogsController', ['middleware'=>'']);
+Route::resource('blogs', 'BlogsController');
 
 Route::resource('blogs.posts', 
 				'PostsController', 
 				[
-					'middleware'=>'auth', 
 					'except'=>['edit', 'index']
-				
 				]);
 				
 Route::get('blogs/{blogs}/dashboard/comments', ['as'=>'blogs.comments', 'uses'=>'CommentsController@all']);

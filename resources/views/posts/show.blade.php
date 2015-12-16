@@ -33,7 +33,7 @@
 	
 	<h3>Comments</h3>
 	@foreach ($comments as $comment)
-	    		<li>{{$comment->name}}</li>
+	    		<li>{{$comment->name}} </li>
 	    		</form>
 		</li>		
 	@endforeach

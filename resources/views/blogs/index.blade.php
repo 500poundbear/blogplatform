@@ -3,7 +3,9 @@
 @section('content')
 	    
 	Well hello there <b> {{$user['name']}} </b> (id: {{$user['id']}})
-
+	<form action="{{ route('auth.logout')}}" method="POST">
+					    <button>test</button>
+					</form>
     <h3>Links</h3>
     <ul>
 	    <li><a href="{{route('blogs.create')}}">Create Blog</a></li>
@@ -24,7 +26,6 @@
 					    <button>Delete Blog</button>
 					</form>
 	    		</li>
-	    		
 	    	@endforeach
     	</ul>
     @endif

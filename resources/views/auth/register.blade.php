@@ -26,3 +26,5 @@
         <button type="submit">Register</button>
     </div>
 </form>
+
+<a href="{{route('auth.login')}}">Login</a>

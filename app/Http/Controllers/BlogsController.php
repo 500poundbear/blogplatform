@@ -17,12 +17,21 @@ use NamBlog\Posts;
 
 class BlogsController extends Controller
 {
+	/* Initialise middleware usage */
+    public function __construct()
+    {
+        $this->middleware('csrf');
+        $this->middleware('auth');
+    }
+    
+    
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-     
+    
     private function getuserinfo() {
 	    
 	    return Auth::user();
@@ -125,9 +134,12 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Blog $blog)
+    public function edit(Blogs $blog)
     {
-        //
+	    
+	    
+	    
+	    return view('blogs.edit', compact('blog'));
     }
 
     /**
@@ -137,9 +149,41 @@ class BlogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Blog $blog)
+    public function update(Blogs $blog)
     {
-        //
+	    $rules = array(
+		    'title' => 'required',
+		    'description' => 'required|max:200',
+		    'slug' => 'required|max:100',
+		    'type' => 'required|in:public,private'
+	    );
+	    
+	    $validator = Validator::make(Input::all(), $rules);
+	    
+	    if ($validator->fails()){
+		    return Redirect::to('/blogs/create')
+		    		->withErrors($validator)
+		    		->withInput();
+		    
+	    } else {
+		    $updatedblogdata = array(
+			    'title' => Input::get('title'),
+			    'description' => Input::get('description'),
+			    'slug' => Input::get('slug'), 
+			    'type' => Input::get('type'),
+			    'owner' => Auth::user()['id']
+		    );
+			
+			$updatedblog = Blogs::where('id', $blog['id'])->update($updatedblogdata);	
+			
+			
+			if(!$updatedblog) {
+				NamBlog::abort(500, 'Error');
+			} else {
+				return Redirect::to(route('blogs.manage', [$blog->slug]));
+			}    
+	    }
+
     }
 
     /**

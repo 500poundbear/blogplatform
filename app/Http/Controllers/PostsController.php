@@ -19,6 +19,13 @@ use NamBlog\Blogs;
 
 class PostsController extends Controller
 {
+	/* Initialise middleware usage */
+    public function __construct()
+    {
+        $this->middleware('csrf');
+        $this->middleware('auth');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

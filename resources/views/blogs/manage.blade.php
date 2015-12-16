@@ -9,6 +9,7 @@
     </ul>
 	<h2>Dashboard</h2>
 	{{ $blog }}
+	<a href="{{ route('blogs.edit', [$blog->slug])}}">Edit Blog</a>
 	
 	<h3>Posts</h3>
 	<a href="{{ route('blogs.posts.create', [$blog->slug]) }}">New</a>
@@ -21,9 +22,8 @@
 	
 	<h3>Comments</h3>
 	@foreach ($comments as $comment)
-	    		<li>{{$comment->name}}</li>
-	    		</form>
-		</li>		
+	    		<li>{{$comment->name}} - {{$comment->message}} - {{$comment->updated_at}}</li>
+	    			
 	@endforeach
 
 
