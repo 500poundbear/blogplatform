@@ -4,7 +4,7 @@
 	    
 	Well hello there <b> {{$user['name']}} </b> (id: {{$user['id']}})
 	<form action="{{ route('auth.logout')}}" method="POST">
-					    <button>test</button>
+					    <button>Logout</button>
 					</form>
     <h3>Links</h3>
     <ul>
@@ -17,9 +17,9 @@
     @else
     	<ul>
 	    	@foreach ($blogs as $blog)
-	    		<li><a href="{{route('blogs.show', $blog->slug)}}">{{ $blog->title }}</a></li>
+	    		<li><a href="{{route('blogs.show', $blog->slug)}}">View Blog [{{ $blog->title }}]</a></li>
 	    		<li>
-	    			<a href="{{route('blogs.manage', $blog->slug)}}">Dashboard[{{$blog->title}}]</a>
+	    			<a href="{{route('blogs.manage', $blog->slug)}}">Dashboard [{{$blog->title}}]</a>
 					<form action="{{ route('blogs.destroy', $blog->slug)}}" method="POST">
 					    <input type="hidden" name="_method" value="DELETE">
 					    <input type="hidden" name="_token" value="{{ csrf_token() }}">

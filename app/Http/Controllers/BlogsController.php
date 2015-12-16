@@ -21,7 +21,7 @@ class BlogsController extends Controller
     public function __construct()
     {
         $this->middleware('csrf');
-        $this->middleware('auth');
+        $this->middleware('auth', ['except'=>'show']);
     }
     
     

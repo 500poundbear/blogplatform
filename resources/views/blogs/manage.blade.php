@@ -23,6 +23,13 @@
 	<h3>Comments</h3>
 	@foreach ($comments as $comment)
 	    		<li>{{$comment->name}} - {{$comment->message}} - {{$comment->updated_at}}</li>
+	    		
+	    		<a href="{{route('comment.edit', [$blog->slug, $comment->id])}}">Edit</a>
+	    		<!--<form action="" method="POST">
+					    <button>Delete Comment</button>
+					</form>
+	    		</form>
+				-->
 	    			
 	@endforeach
 

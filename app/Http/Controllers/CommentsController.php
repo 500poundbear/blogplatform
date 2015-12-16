@@ -51,25 +51,14 @@ class CommentsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($blog, $comment)
     {
-        //
+        return view('comment.edit', compact('blog', 'comment'));
     }
 
     /**
@@ -79,9 +68,21 @@ class CommentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($blog, $comment)
     {
-        //
+	    $rules = array(
+		    'name' => 'required',
+		    'email' => 'required|max:200',
+		    'message' => 'required', 
+		    'postid' => 'required'
+	    );
+	    
+	    $validator = Validator::make(Input::all(), $rules);
+
+	    //TODO
+	    
+		return "SDFSDF";	    
+	    
     }
 
     /**
