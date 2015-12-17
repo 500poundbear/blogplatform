@@ -180,6 +180,7 @@ class BlogsController extends Controller
 			if(!$updatedblog) {
 				NamBlog::abort(500, 'Error');
 			} else {
+				
 				return Redirect::to(route('blogs.manage', [$blog->slug]));
 			}    
 	    }

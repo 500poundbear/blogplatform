@@ -145,7 +145,8 @@ return [
         NamBlog\Providers\EventServiceProvider::class,
         NamBlog\Providers\RouteServiceProvider::class,
 
-		Collective\Html\HtmlServiceProvider::class
+		Collective\Html\HtmlServiceProvider::class,
+		Laracasts\Flash\FlashServiceProvider::class
     ],
 
     /*
@@ -196,7 +197,8 @@ return [
 		
 		##added
 		'Form' 		=> Collective\Html\FormFacade::class,
-		'Html'		=> Collective\Html\HtmlFacade::class
+		'Html'		=> Collective\Html\HtmlFacade::class,
+		'Flash'		=> Laracasts\Flash\Flash::class
     ],
 
 ];

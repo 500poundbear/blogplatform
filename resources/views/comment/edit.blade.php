@@ -8,6 +8,15 @@
     </div>
 @endif
 
+@if (Session::has('flash_notification.message'))
+    <div class="alert alert-{{ Session::get('flash_notification.level') }}" style="background:pink;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+        {{ Session::get('flash_notification.message') }}
+    </div>
+@endif
+
+<a href="{{route('blogs.manage', $blog->slug)}}">Back</a>
 
 {!!Form::model($comment, ['route' => ['comment.update', $blog->slug, $comment->id], 'method' => 'put']) !!} 
    			{!! Form::label('name', 'Name') !!} 

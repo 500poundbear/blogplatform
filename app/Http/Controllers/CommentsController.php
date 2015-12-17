@@ -10,6 +10,7 @@ use Input;
 use Routes;
 use Validator;
 use Redirect;
+use Flash;
 
 use NamBlog\Http\Requests;
 use NamBlog\Http\Controllers\Controller;
@@ -114,12 +115,13 @@ class CommentsController extends Controller
 		    );
 		    
 			$updatedcomment = Comment::where('id', Input::get('comment_id'))->update($updatedcommentdata);	
-			return Redirect::to(route('comment.edit', [$blog->slug, $comment->id]));    		    
+			if (!$updatedcomment) {
+				return NamBlog::abort(500, 'Error');
+			} else {
+				Flash::message("Comment (id: ".Input::get('comment_id').") has been updated!");
+				return Redirect::to(route('comment.edit', [$blog->slug, $comment->id]));    		    
+			}
 	    }
-
-	    
-		return "SDFSDF";	    
-	    
     }
 
     /**
