@@ -1,7 +1,21 @@
 @extends('main')
  
 @section('content')
-	
+	@if (Session::has('flash_notification.error'))
+    <div class="alert alert-{{ Session::get('flash_notification.level') }}" style="background:pink;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+        {{ Session::get('flash_notification.error') }}
+    </div>
+@endif
+
+@if (Session::has('flash_notification.message'))
+    <div class="alert alert-{{ Session::get('flash_notification.level') }}" style="background:pink;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+        {{ Session::get('flash_notification.message') }}
+    </div>
+@endif
 	
     <h3>Links</h3>
     <ul>
@@ -22,15 +36,14 @@
 	
 	<h3>Comments</h3>
 	@foreach ($comments as $comment)
-	    		<li>{{$comment->name}} - {{$comment->message}} - {{$comment->updated_at}}</li>
+	    <li>{{$comment->name}} - {{$comment->message}} - {{$comment->updated_at}}</li>
 	    		
-	    		<a href="{{route('comment.edit', [$blog->slug, $comment->id])}}">Edit</a>
-	    		<form action="" method="POST">
-					    <button>Delete Comment</button>
-					</form>
-	    		</form>
-				
-	    			
+	    <a href="{{route('comment.edit', [$blog->slug, $comment->id])}}">Edit</a>
+	    <form action="{{ route('comment.destroy', [$blog->slug, $comment->id])}}" method="POST">
+			<input type="hidden" name="_method" value="DELETE">
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
+			<button>Delete</button>
+		</form>			
 	@endforeach
 
 

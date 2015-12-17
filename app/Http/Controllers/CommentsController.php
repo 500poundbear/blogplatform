@@ -128,10 +128,24 @@ class CommentsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * 
      */
-    public function destroy($id)
+    public function destroy($blog, $comment)
     {
-        //
-    }
+		$rules = array(
+			'comment_id' => 'required|int'	
+		);
+		$validator = Validator::make(['comment_id'=>$comment['id']], $rules);
+	    
+	    if ($validator->fails()) {
+		    Flash::error("Deletion of comment (id: ".Input::get('comment_id').") has failed!");
+		    return Redirect::to(route('blogs.manage', $blog['slug'])); 
+	    } else {
+			$todelete = Comment::findOrFail($comment['id']);
+			$todelete->delete();
+        
+			Flash::message('Deletion of comment (id: '.Input::get('comment_id').") has succeeded!");
+			return Redirect::to(route('blogs.manage', $blog['slug']));    
+		}
+	}
 }

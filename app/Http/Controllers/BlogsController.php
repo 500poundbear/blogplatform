@@ -44,6 +44,12 @@ class BlogsController extends Controller
 	    return view('blogs.index', compact('blogs', 'user'));
     }
 
+	public function view() {
+		return "FSDFSFD";
+		
+	}
+
+
     /**
      * Show the form for creating a new resource.
      *
