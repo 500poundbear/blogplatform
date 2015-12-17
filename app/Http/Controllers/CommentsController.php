@@ -4,8 +4,18 @@ namespace NamBlog\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
+use Session;
+use Input;
+use Routes;
+use Validator;
+use Redirect;
+
 use NamBlog\Http\Requests;
 use NamBlog\Http\Controllers\Controller;
+
+use NamBlog\Comment;
+use NamBlog\Posts;
 
 class CommentsController extends Controller
 {
@@ -68,18 +78,45 @@ class CommentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     
+    private function checkpostandusertally($comment_id) {
+	    /* Remember, returning true means error present */
+		return Comment::where('id',$comment_id)->first()->post()->first()->author_id !== Auth::user()['id'];
+	}  
+     
     public function update($blog, $comment)
     {
 	    $rules = array(
 		    'name' => 'required',
-		    'email' => 'required|max:200',
+		    'email' => 'required|email',
 		    'message' => 'required', 
-		    'postid' => 'required'
+		    'comment_id' => 'required|int'
 	    );
 	    
 	    $validator = Validator::make(Input::all(), $rules);
+	    
+	    $validator->after(function($validator) {
+		    if ($this->checkpostandusertally(Input::get('comment_id'))) {
+		        $validator->errors()->add('field', 'Something is wrong with this field!');
+		    }
+		});
+	    
+	 	if ($validator->fails()){
+		    return Redirect::to(route('comment.edit', [$blog->slug, $post->slug, $comment->id]))
+		    		->withErrors($validator)
+		    		->withInput();
+		    
+	    } else {
+		    $updatedcommentdata = array(
+			    'name' => Input::get('name'),
+			    'email' => Input::get('email'),
+			    'message' => Input::get('message')
+		    );
+		    
+			$updatedcomment = Comment::where('id', Input::get('comment_id'))->update($updatedcommentdata);	
+			return Redirect::to(route('comment.edit', [$blog->slug, $comment->id]));    		    
+	    }
 
-	    //TODO
 	    
 		return "SDFSDF";	    
 	    
