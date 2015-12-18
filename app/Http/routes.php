@@ -44,7 +44,6 @@ Route::bind('comment', function($value, $route) {
 	return NamBlog\Comment::whereId($value)->first();
 });
 
-Route::get('blogs/{blogs}/{posts}', ['as'=>'blogs.posts.view', 'uses'=>'BlogsController@view']);
 
 Route::get('blogs/{blogs}/dashboard', ['as'=>'blogs.manage', 'uses'=>'BlogsController@manage']);
 Route::resource('blogs', 'BlogsController');
@@ -54,6 +53,9 @@ Route::resource('blogs.posts',
 				[
 					'except'=>['edit', 'index']
 				]);
+
+Route::get('blogs/{blogs}/{posts}', ['as'=>'blogs.posts.view', 'uses'=>'BlogsController@view']);
+
 				
 Route::get('blogs/{blogs}/dashboard/comments/{comment}', ['as'=>'comment.edit', 'uses'=>'CommentsController@edit']);
 Route::put('blogs/{blogs}/dashboard/comments/{comment}', ['as'=>'comment.update', 'uses'=>'CommentsController@update']);

@@ -6,7 +6,9 @@
     </head>
     <body>
         @section('sidebar')
-            This is the master sidebar.
+            NamBlog. 
+            <a href="/auth/login">Login</a><br>
+            <a href="/auth/register">Register</a><br>
         @show
 
         <div class="container">

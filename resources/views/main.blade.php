@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>App Name - @yield('title')</title>
+        <title>NamBlog - @yield('title')</title>
     </head>
     <body>
         @section('sidebar')

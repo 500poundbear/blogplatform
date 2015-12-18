@@ -21,7 +21,7 @@ class BlogsController extends Controller
     public function __construct()
     {
         $this->middleware('csrf');
-        $this->middleware('auth', ['except'=>'show']);
+        $this->middleware('auth', ['except'=>['show','view']]);
     }
     
     
@@ -44,8 +44,9 @@ class BlogsController extends Controller
 	    return view('blogs.index', compact('blogs', 'user'));
     }
 
-	public function view() {
-		return "FSDFSFD";
+	public function view($blog, $post) {
+		
+		return view('blogs.view', compact('blog', 'post'));
 		
 	}
 

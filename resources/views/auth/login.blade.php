@@ -1,3 +1,6 @@
+<p> For convenience, you can log in with the following credentials. email: abc@asdf.com pwd: abc123
+
+
 <form method="POST" action="/auth/login">
     {!! csrf_field() !!}
 
