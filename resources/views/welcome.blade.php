@@ -6,11 +6,11 @@
     </head>
     <body>
         @section('sidebar')
-            NamBlog. 
+            NamBlog.
             <a href="/auth/login">Login</a><br>
             <a href="/auth/register">Register</a><br>
         @show
-
+        
         <div class="container">
             @yield('content')
         </div>

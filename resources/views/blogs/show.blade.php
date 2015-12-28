@@ -1,15 +1,17 @@
-@extends('main')
- 
+@extends('blog')
+@section('title', $blog['title'])
+
+@section('sidebar')
+  @parent
+@stop
+
 @section('content')
-	The blog, <b>{{$blog['title']}}</b> should be rendered here. 
-    
-    
-    <h3>Posts</h3>
-	
+	<h1>{{$blog['title']}}</h1>
+
 	@foreach ($posts as $post)
-		<h4><a href="{{route('blogs.posts.view',[$blog->slug, $post->slug])}}">{{$post['title']}}</a></h4>
+		<h3><a href="{{route('blogs.posts.view',[$blog->slug, $post->slug])}}">{{$post['title']}}</a></h3>
 		<p>{{$post['summary']}}</p>
-		<span>Created at {{$post['created_at']}}</span>
+		<span>{{$post['created_at']}}</span>
 	@endforeach
 
 @endsection
