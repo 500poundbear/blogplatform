@@ -25,7 +25,7 @@ class PostsController extends Controller
         $this->middleware('csrf');
         $this->middleware('auth');
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -48,13 +48,13 @@ class PostsController extends Controller
 	    $rules = array(
 		    'title' => 'required',
 		    'summary' => 'required|max:200',
-		    'content' => 'required', 
+		    'content' => 'required',
 		    'slug' => 'required|max:100',
 		    'blogid' => 'required'
 	    );
-	    
+
 	    $validator = Validator::make(Input::all(), $rules);
-	    
+
 	    if ($validator->fails()){
 		    echo "SDSDFSDF";
 		    var_dump($validator->messages());
@@ -73,14 +73,14 @@ class PostsController extends Controller
 			    'author_id' => Auth::user()['id']
 		    );
 			$newpostentry = Posts::create($newpostdata);
-			$saved = $newpostentry->save();		
-			
+			$saved = $newpostentry->save();
+
 			if(!$saved) {
 				NamBlog::abort(500, 'Error');
 			} else {
 				$currblog = Blogs::where('id', $newpostdata['blog_id'])->first();
 				return Redirect::to(route('blogs.show', $currblog['slug']));
-			}    
+			}
 	    }
     }
 
@@ -94,7 +94,9 @@ class PostsController extends Controller
     public function show(Blogs $blog, Posts $post)
     {
 	    $comments = $post->comment()->get();
-        return view('posts.show', compact('blog','post','comments'));
+
+      $user = $this->getuserinfo();
+        return view('posts.show', compact('blog','post','comments','user'));
     }
 
     /**
@@ -109,13 +111,13 @@ class PostsController extends Controller
 	    $rules = array(
 		    'title' => 'required',
 		    'summary' => 'required|max:200',
-		    'content' => 'required', 
+		    'content' => 'required',
 		    'slug' => 'required|max:100',
 		    'postid' => 'required'
 	    );
-	    
+
 	    $validator = Validator::make(Input::all(), $rules);
-	    
+
 	    if ($validator->fails()){
 		    echo "SDSDFSDF";
 		    var_dump($validator->messages());
@@ -132,11 +134,11 @@ class PostsController extends Controller
 			    'slug' => Input::get('slug'),
 			    'author_id' => Auth::user()['id']
 		    );
-		    
+
 		    /* TODO: Check if user is authorised to edit post */
-		    
-			$updatedpost = Posts::where('id', Input::get('postid'))->update($updatedpostdata);	
-			return Redirect::to(route('blogs.posts.show', [$blog['slug'], $updatedpostdata['slug']]));    		    
+
+			$updatedpost = Posts::where('id', Input::get('postid'))->update($updatedpostdata);
+			return Redirect::to(route('blogs.posts.show', [$blog['slug'], $updatedpostdata['slug']]));
 	    }
 	}
 
@@ -147,10 +149,10 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Blogs $blog, Posts $post)
-    { 
+    {
         $todelete = Posts::findOrFail($post['id']);
         $todelete->delete();
-        
+
         return Redirect::to(route('blogs.manage', $blog['slug']));
 
     }

@@ -23,17 +23,15 @@ class BlogsController extends Controller
         $this->middleware('csrf');
         $this->middleware('auth', ['except'=>['show','view']]);
     }
-    
-    
-    
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     private function getuserinfo() {
-	    
+
 	    return Auth::user();
     }
     public function index()
@@ -45,9 +43,10 @@ class BlogsController extends Controller
     }
 
 	public function view($blog, $post) {
-		
-		return view('blogs.view', compact('blog', 'post'));
-		
+
+    $user = $this->getuserinfo();
+		return view('blogs.view', compact('blog', 'post','user'));
+
 	}
 
 
@@ -59,7 +58,7 @@ class BlogsController extends Controller
     public function create()
     {
 	    $user = $this->getuserinfo();
-	    
+
         return view('blogs.create', compact('user'));
     }
 
@@ -73,37 +72,37 @@ class BlogsController extends Controller
     {
 	    //Use Input::get(<inputname>) to get value
 	    var_dump(Input::all());
-	    
+
 	    $rules = array(
 		    'title' => 'required',
 		    'description' => 'required|max:200',
 		    'slug' => 'required|max:100',
 		    'type' => 'required|in:public,private'
 	    );
-	    
+
 	    $validator = Validator::make(Input::all(), $rules);
-	    
+
 	    if ($validator->fails()){
 		    return Redirect::to('/blogs/create')
 		    		->withErrors($validator)
 		    		->withInput();
-		    
+
 	    } else {
 		    $newblogdata = array(
 			    'title' => Input::get('title'),
 			    'description' => Input::get('description'),
-			    'slug' => Input::get('slug'), 
+			    'slug' => Input::get('slug'),
 			    'type' => Input::get('type'),
 			    'owner' => Auth::user()['id']
 		    );
 			$newblogentry = Blogs::create($newblogdata);
-			$saved = $newblogentry->save();		
-			
+			$saved = $newblogentry->save();
+
 			if(!$saved) {
 				NamBlog::abort(500, 'Error');
 			} else {
 				return Redirect::to(route('blogs.index'));
-			}    
+			}
 	    }
     }
 
@@ -115,11 +114,13 @@ class BlogsController extends Controller
      */
     public function show(Blogs $blog)
     {
-	    $posts = $blog->posts()->get();
+	    $posts = $blog->posts()->orderBy('id','desc')->get();
+
+	    $user = $this->getuserinfo();
 	    #$posts = Blogs::findOrFail($blog)->posts();
-        return view('blogs.show', compact('blog', 'posts'));
+        return view('blogs.show', compact('blog', 'posts', 'user'));
     }
-    
+
     /**
      * Manage the specific resource. More like dashboard
      */
@@ -143,9 +144,9 @@ class BlogsController extends Controller
      */
     public function edit(Blogs $blog)
     {
-	    
-	    
-	    
+
+
+
 	    return view('blogs.edit', compact('blog'));
     }
 
@@ -164,32 +165,32 @@ class BlogsController extends Controller
 		    'slug' => 'required|max:100',
 		    'type' => 'required|in:public,private'
 	    );
-	    
+
 	    $validator = Validator::make(Input::all(), $rules);
-	    
+
 	    if ($validator->fails()){
 		    return Redirect::to('/blogs/create')
 		    		->withErrors($validator)
 		    		->withInput();
-		    
+
 	    } else {
 		    $updatedblogdata = array(
 			    'title' => Input::get('title'),
 			    'description' => Input::get('description'),
-			    'slug' => Input::get('slug'), 
+			    'slug' => Input::get('slug'),
 			    'type' => Input::get('type'),
 			    'owner' => Auth::user()['id']
 		    );
-			
-			$updatedblog = Blogs::where('id', $blog['id'])->update($updatedblogdata);	
-			
-			
+
+			$updatedblog = Blogs::where('id', $blog['id'])->update($updatedblogdata);
+
+
 			if(!$updatedblog) {
 				NamBlog::abort(500, 'Error');
 			} else {
-				
+
 				return Redirect::to(route('blogs.manage', [$blog->slug]));
-			}    
+			}
 	    }
 
     }
@@ -202,10 +203,10 @@ class BlogsController extends Controller
      */
     public function destroy(Blogs $blog)
     {
-	    
+
         $todelete = Blogs::findOrFail($blog['id']);
         $todelete->delete();
-        
+
         return Redirect::to(route('blogs.index'));
     }
 }

@@ -24,4 +24,13 @@
 	<p>{{$post['content']}}</p>
 	<span>{{$post['created_at']}}</span>
 
+
+          <div style="text-align:center; margin-top:100px;">
+          <span>Video controls:
+          <a href="#" class="tubular-play">Play</a> |
+          <a href="#" class="tubular-pause">Pause</a> |
+          <a href="#" class="tubular-mute">Mute</a>
+          </span>
+          </div>
+
 @endsection
