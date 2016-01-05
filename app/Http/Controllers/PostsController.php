@@ -25,7 +25,10 @@ class PostsController extends Controller
         $this->middleware('csrf');
         $this->middleware('auth');
     }
-
+    /* returns Auth::user() */
+    private function getuserinfo() {
+      return Auth::user();
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -33,7 +36,10 @@ class PostsController extends Controller
      */
     public function create($blog)
     {
-        return view('posts.create', compact('blog'));
+      $user = $this->getuserinfo();
+
+      return view('posts.create', compact('blog','user'));
+
     }
 
     /**

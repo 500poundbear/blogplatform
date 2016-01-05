@@ -31,7 +31,7 @@
 
     <div class="container">
         @if (isset($user['name']))
-            <span><a href="{{route('blogs.index')}}">Back to Dashboard</a></span>
+            <span><a href="{{route('blogs.manage', [$blog->slug])}}">Back to Dashboard</a></span>
         @else
         @endif
 

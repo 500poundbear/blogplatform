@@ -25,17 +25,6 @@
         </ul>
       </div>
     </div>
-    <div class="row">
-      <div class="large-8 columns">
-        <h1>Dashboard</h1>
-      </div>
-      <div class="large-4 columns">
-        <form action="{{ route('auth.logout')}}" method="POST">
-          <input type="submit" class="button"></input>
-        </form>
-      </div>
-    </div>
-
     @section('sidebar')
 
     @show
@@ -43,5 +32,13 @@
     <div class="container row">
       @yield('content')
     </div>
+    <div class="row">
+      <div class="large-12 columns">
+        <form action="{{ route('auth.logout')}}" method="POST">
+          <center><input type="submit" class="button" value="Logout"></input></center>
+        </form>
+      </div>
+    </div>
+
   </body>
 </html>¯

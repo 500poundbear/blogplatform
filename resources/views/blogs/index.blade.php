@@ -11,10 +11,10 @@
 </script>
 <div class="large-8 columns">
 
-    <h3>Links</h3>
+    <h3>Blogs</h3>
 
     @if (!$blogs -> count())
-    	You have no blog
+    	You have no blog. Click <a href="{{route('blogs.create')}}">here</a> to get started.
     @else
 		  	@foreach ($blogs as $blog)
 				<div class="panel callout radius">

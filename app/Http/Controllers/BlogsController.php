@@ -126,14 +126,16 @@ class BlogsController extends Controller
      */
     public function manage(Blogs $blog)
     {
-	    $posts = $blog->posts()->get();
+	    $posts = $blog->posts()->orderBy('id','desc')->get();
 	    $comments = array();
 	    foreach($posts as $post) {
-		    foreach($post->comment()->get() as $comment) {
+		    foreach($post->comment()->orderBy('id','desc')->get() as $comment) {
 			    $comments[] = $comment;
 		    }
 	    }
-	   	return view('blogs.manage', compact('blog','posts','comments'));
+
+	    $user = $this->getuserinfo();
+      return view('blogs.manage', compact('blog','posts','comments','user'));
     }
 
     /**
@@ -146,8 +148,9 @@ class BlogsController extends Controller
     {
 
 
+	    $user = $this->getuserinfo();
 
-	    return view('blogs.edit', compact('blog'));
+	    return view('blogs.edit', compact('blog', 'user'));
     }
 
     /**
